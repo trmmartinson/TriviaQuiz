@@ -1,0 +1,20 @@
+
+
+
+
+.dialog {
+        color: red;
+        height: 90px;
+        background-color: white;
+}
+
+.question {
+    font-size: 95;
+}
+
+.answers {
+    font-size: 35;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Trivial Program</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- I intentionally am not including reset.css since i used bootstrap it is unnecessary -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+    <audio id="myScratch">
+        <source src="assets/sounds/record-scratch-1.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- <img src="starwars.jpg" id="logo"> -->
+    <div class="container dialog">
+    </div>
+    <div class="container" id="timer">
+
+    </div>
+    <div id="preGame">
+         <h2>Welcome to an exciting triva quiz</h2>
+         <h2>Press a button to star the game.  You will have 30 seconds to answer each question!</h2>
+         <button type="button" id="playGame" class="btn btn-primary">Play Triva Game Now</button>
+    </div>
+
+    <container class="question">
+    </container>
+
+    <container class="answers">
+    </container>
+
+    <!---<script src="assets/javascript/quiz.js"></script> -->
+    <script src="assets/javascript/app.js"></script>
+</body>
+
+</html>
