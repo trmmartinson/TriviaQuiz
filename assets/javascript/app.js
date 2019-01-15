@@ -1,4 +1,4 @@
-
+//1047 pm
 var theInterval;
 var questionList = [];
 var qNum = 0; // question number
@@ -29,7 +29,7 @@ class quizelement {
           }));
      }
 }
-function allowNewGame() {  // resetstuff and show button to run again if user wishes
+function allowNewGame() {  // resetstuff and show button to run again if youse wishes
      clearInterval(theInterval);
      $(".question").empty();
      $(".answers").empty();
