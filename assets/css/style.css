@@ -1,7 +1,6 @@
 
 
 
-
 .dialog {
         color: red;
         height: 90px;
@@ -16,5 +15,6 @@
     font-size: 35;
     padding-top: 20px;
     padding-bottom: 20px;
+    background-color: lightskyblue;
 }
 

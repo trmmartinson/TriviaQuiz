@@ -18,9 +18,9 @@ class quizelement {
      show_correctanswer(isTimeout) {
           scratch.play();
           if (isTimeout == "timeout")
-               $(".dialog").html(`<h1>You ran out of time! The correct Answer was:${this.answers[this.correctAnswer]}</h1>`);
+               $(".dialog").html(`<h1>You ran out of time! The correct answer is: ${this.answers[this.correctAnswer]}</h1>`);
           else
-               $(".dialog").html(`<h1>The correct Answer was:${this.answers[this.correctAnswer]}</h1>`);
+               $(".dialog").html(`<h1>The correct answer is: ${this.answers[this.correctAnswer]}</h1>`);
      }
      display_html() {
           $(".question").html(`<h1 class='jumbotron'>${this.question}</h1>`);
@@ -29,12 +29,11 @@ class quizelement {
           }));
      }
 }
-function allowNewGame() {
-     console.log("new game stsate");
+function allowNewGame() {  // resetstuff and show button to run again if user wishes
+     clearInterval(theInterval);
      $(".question").empty();
      $(".answers").empty();
      $(".dialog").empty();
-     $("#timer").empty();
      $("#preGame").show();
      timeouts = 0;
      rightAnswers = 0;
@@ -43,16 +42,17 @@ function allowNewGame() {
 }
 function endOfGame() {
      clearInterval(theInterval);
+     $("#timer").empty();
      $(".dialog").html(`<h1>Final Report,  Right:${rightAnswers} Wrong:${wrongAnswers} Timeouts: ${timeouts}`);
-     setTimeout(allowNewGame, 5000);
+     setTimeout(allowNewGame, 3000);
 }
 function score(evalAnswer) {
      var doDelay = false;
      clearInterval(theInterval);
      if (evalAnswer === 'timeout') {
           timeouts++;
-          questionList[qNum].show_correctanswer(evalAnswer);
           doDelay = true;
+          questionList[qNum].show_correctanswer(evalAnswer);
      }
      if (evalAnswer === true) {
           rightAnswers++;
@@ -60,54 +60,45 @@ function score(evalAnswer) {
      }
      if (evalAnswer === false) {
           wrongAnswers++;
-          questionList[qNum].show_correctanswer(evalAnswer);
           doDelay = true;
+          questionList[qNum].show_correctanswer(evalAnswer);
      }
-
      if (questionList.length === qNum + 1) // just hit last question number
      {
-          console.log("call end of game");
-          endOfGame();
-     }
-     console.log("score dodelay=" + doDelay);
+         
+          questionList[qNum].show_correctanswer(evalAnswer);
+          setTimeout(endOfGame,doDelay ? 3000 : 0,"score");
+     } 
      return doDelay;
 }
 
 function countDown(i, callback) {
-     theInterval = setInterval(function () {
+          clearInterval(theInterval);
+          theInterval = setInterval(function () {
           $("#timer").html("Seconds Remaining: " + i);
           if ((i--) === 0) {
                score("timeout");
-               clearInterval(theInterval);
-               console.log(qNum + "is qunum ");
-               if (questionList.length === qNum + 1) // just hit last question number
-                    endOfGame();
-               else
-                    setTimeout(nextQuestion, 5000);
-               console.log("stuck");
+               setTimeout(nextQuestion, 3000);
           }
      }, 1000);
 }
 
 function nextQuestion(doPause) {
-     console.log("begin nextquertion function");
+     clearInterval(theInterval);
      $(".dialog").empty();
      //if game has ended show the results and allow user to play again
-     if (qNum == questionList.length - 1) {
-          endOfGame();
-     }
-     else {
+     if (qNum != questionList.length - 1) {
           qNum++;
           questionList[qNum].display_html();
-          countDown(10, score);
+          countDown(20, score);
      }
 }
 
-
-questionList.push(new quizelement("0are nickels made out of wood?", ["yes", "no"], 1));
-questionList.push(new quizelement("1 are trees made out of wood?", ["yes", "no"], 0));
-questionList.push(new quizelement("2 cents made out of wood?", ["yes", "no"], 1));
-questionList.push(new quizelement("3 nickels made out of wood?", ["yes", "no"], 1));
+questionList.push(new quizelement("Which continent ironically does not have any ants?",
+     ["A. South America", "B. Asia","C. Europe","D. Antarctica" ], 3));
+questionList.push(new quizelement("Are nickels made out of wood?", ["yes", "no"], 1));
+questionList.push(new quizelement("Are trees made out of wood?", ["yes", "no"], 0));
+questionList.push(new quizelement("Are pennies made out of wood?", ["yes", "no"], 1));
 
 $("#playGame").click(function () {
      $("#preGame").hide();
@@ -121,11 +112,7 @@ $(".answers").click(function (event) {
      clearInterval(theInterval);
      doDelay = score(questionList[qNum].isCorrect(event.target.id));
      if (qNum < questionList.length - 1) {
-          console.log("nextQuestion, delay=" + (doDelay ? 5000 : 0));
-          setTimeout(nextQuestion, doDelay ? 5000 : 0);
+          setTimeout(nextQuestion, doDelay ? 3000 : 0);
      }
-     else {
-          console.log("finished");
-     }
-     /* return false;  /stack overflow said to add this line. Event was happening twice and I am unsure why this is needed... (*/
+     return false;  //stack overflow said to add this line. Event was happening twice and I am unsure why this is needed... (*/
 });
